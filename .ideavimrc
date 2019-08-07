@@ -1,0 +1,6 @@
+source ~/.vimrc
+
+set surround
+
+set hls
+set is
