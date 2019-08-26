@@ -1,5 +1,6 @@
 so ~/.vim/plugins.vim
 set number
+set rnu
 
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
