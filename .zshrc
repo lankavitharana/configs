@@ -119,14 +119,35 @@ precmd () {
         # Store the difference between the last command start date vs. current date.
         CMD_ELAPSED_TIME=$(($CMD_END_DATE - $CMD_START_DATE))
         # Store an arbitrary threshold, in seconds.
-        CMD_NOTIFY_THRESHOLD=10
+        CMD_NOTIFY_THRESHOLD=15
 
         if [[ $CMD_ELAPSED_TIME -gt $CMD_NOTIFY_THRESHOLD ]]; then
             # Beep or visual bell if the elapsed time (in seconds) is greater than threshold
             print -n '\a'
             # Send a notification
             notify-send 'Job finished' "The job \"$CMD_NAME\" has finished."
-	    # aplay "/usr/share/sounds/ubuntu/notification/Positive.ogg"
+	    (paplay "/usr/share/sounds/ubuntu/notifications/Positive.ogg" &>/dev/null &)
         fi
+
+    	unset CMD_START_DATE
     fi
+}
+
+
+# Custom aliases - rajith 
+# To enable disable touchpad 
+touchpad() {
+	if [ -z "$1" ]; then 
+		echo "Invalid input, provide '1' to 'Enable' and '0' to 'Disable'";
+		return;
+	fi
+	if [ "$1" != "1" ] && [ "$1" != "0" ]; then 
+		echo "Invalid input, provide '1' to 'Enable' and '0' to 'Disable'";
+		return;
+	fi
+	touchId=( $(xinput list | grep TouchPad | awk '{print $6}' | awk -F '=' '{print $2}') )
+	deviceDetails=( $(xinput list | grep TouchPad) )
+	xinput set-prop $touchId "Device Enabled" $1
+	echo "Setting 'Device Enabled' property of defice id - $touchId, with value - $1"
+	echo "Device - $deviceDetails"
 }
