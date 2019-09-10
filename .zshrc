@@ -112,6 +112,7 @@ preexec () {
     CMD_NAME=$1
 }
 precmd () {
+    EXIT_STATUS=$?
     # Proceed only if we've ran a command in the current shell.
     if ! [[ -z $CMD_START_DATE ]]; then
         # Note current date in unix time
@@ -119,14 +120,22 @@ precmd () {
         # Store the difference between the last command start date vs. current date.
         CMD_ELAPSED_TIME=$(($CMD_END_DATE - $CMD_START_DATE))
         # Store an arbitrary threshold, in seconds.
-        CMD_NOTIFY_THRESHOLD=15
+        CMD_NOTIFY_THRESHOLD=10
 
         if [[ $CMD_ELAPSED_TIME -gt $CMD_NOTIFY_THRESHOLD ]]; then
             # Beep or visual bell if the elapsed time (in seconds) is greater than threshold
+	    if [ "$EXIT_STATUS" -eq "0" ]; then
+		    (zenity --info --title="Job Success !!!!" --icon-name=info --text="The job \"$CMD_NAME\" has finished. \n\nExit code - $EXIT_STATUS" --timeout=5 --width=300 &>/dev/null &)
+		    SOUND_FILE="/usr/share/sounds/ubuntu/notifications/Positive.ogg"
+	    else
+		    (zenity --error --title="Job Failed !!!!" --icon-name=error --text="The job \"$CMD_NAME\" has finished. \n\nExit code - $EXIT_STATUS" --timeout=5 --width=300 &>/dev/null &)
+		    SOUND_FILE="/usr/share/sounds/ubuntu/notifications/Mallet.ogg"
+	    fi
             print -n '\a'
             # Send a notification
-            notify-send 'Job finished' "The job \"$CMD_NAME\" has finished."
-	    (paplay "/usr/share/sounds/ubuntu/notifications/Positive.ogg" &>/dev/null &)
+            # notify-send "$JOB_HEADER" "The job \"$CMD_NAME\" has finished. Exit status - $EXIT_STATUS" --icon "$ICON_PATH" 
+	    # Playing a success or failure sound
+	    (paplay $SOUND_FILE &>/dev/null &)
         fi
 
     	unset CMD_START_DATE
@@ -151,3 +160,4 @@ touchpad() {
 	echo "Setting 'Device Enabled' property of defice id - $touchId, with value - $1"
 	echo "Device - $deviceDetails"
 }
+
