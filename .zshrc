@@ -68,7 +68,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git history-substring-search)
+plugins=(git history-substring-search fzf)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -160,4 +160,15 @@ touchpad() {
 	echo "Setting 'Device Enabled' property of defice id - $touchId, with value - $1"
 	echo "Device - $deviceDetails"
 }
+
+# Set fzf installation directory path
+export FZF_BASE="$HOME/.fzf"
+
+# Uncomment the following line to disable fuzzy completion
+# export DISABLE_FZF_AUTO_COMPLETION="true"
+
+# Uncomment the following line to disable key bindings (CTRL-T, CTRL-R, ALT-C)
+# export DISABLE_FZF_KEY_BINDINGS="true"
+
+
 
