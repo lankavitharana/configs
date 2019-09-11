@@ -113,6 +113,9 @@ preexec () {
 }
 precmd () {
     EXIT_STATUS=$?
+    if [[ $CMD_NAME == "vim"* ]]; then
+	return;
+    fi
     # Proceed only if we've ran a command in the current shell.
     if ! [[ -z $CMD_START_DATE ]]; then
         # Note current date in unix time
@@ -120,7 +123,7 @@ precmd () {
         # Store the difference between the last command start date vs. current date.
         CMD_ELAPSED_TIME=$(($CMD_END_DATE - $CMD_START_DATE))
         # Store an arbitrary threshold, in seconds.
-        CMD_NOTIFY_THRESHOLD=10
+        CMD_NOTIFY_THRESHOLD=20
 
         if [[ $CMD_ELAPSED_TIME -gt $CMD_NOTIFY_THRESHOLD ]]; then
             # Beep or visual bell if the elapsed time (in seconds) is greater than threshold
