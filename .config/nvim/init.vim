@@ -9,17 +9,21 @@ nnoremap <C-H> <C-W><C-H>
 
 set splitbelow
 set splitright
+" make the cursor blink
+set guicursor=a:blinkon100
 
-if has("autocmd")
-  au VimEnter,InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
-  au InsertEnter,InsertChange *
-    \ if v:insertmode == 'i' |
-    \   silent execute '!echo -ne "\e[5 q"' | redraw! |
-    \ elseif v:insertmode == 'r' |
-    \   silent execute '!echo -ne "\e[3 q"' | redraw! |
-    \ endif
-  au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
-endif
+" below parts are not needed for cursor shape change, as neovim by default
+" support that
+" if has("autocmd")
+"   au VimEnter,InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
+"   au InsertEnter,InsertChange *
+"     \ if v:insertmode == 'i' |
+"     \   silent execute '!echo -ne "\e[5 q"' | redraw! |
+"     \ elseif v:insertmode == 'r' |
+"     \   silent execute '!echo -ne "\e[3 q"' | redraw! |
+"     \ endif
+"   au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+" endif
 
 " *************************************
 " *** Plugin related configurations ***
@@ -41,5 +45,8 @@ set encoding=UTF-8
 " ------ You complete me plugin ------
 " setting rust source path 
 let g:ycm_rust_src_path = '/mnt/office/wso2/dev/otherSources/rust'
+
+" Key mapping to do grep search the word under the cursor 
+map <C-f> :execute " grep -srnw --binary-files=without-match --exclude-dir=.git . -e " . expand("<cword>") . " " <bar> cwindow<CR>
 
 
