@@ -2,6 +2,17 @@ so ~/.vim/plugins.vim
 set number
 set rnu
 
+" Git gutter related configs
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '>'
+let g:gitgutter_sign_removed = '-'
+let g:gitgutter_sign_removed_first_line = '^'
+let g:gitgutter_sign_modified_removed = '<'
+let g:gitgutter_override_sign_column_highlight = 1
+set updatetime=250
+nmap gn <Plug>GitGutterNextHunk  " git next 
+nmap gp <Plug>GitGutterPrevHunk  " git previous
+
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
