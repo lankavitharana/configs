@@ -12,6 +12,8 @@ let g:gitgutter_override_sign_column_highlight = 1
 set updatetime=250
 nmap gn <Plug>GitGutterNextHunk  " git next 
 nmap gp <Plug>GitGutterPrevHunk  " git previous
+nmap ga <Plug>GitGutterStageHunk  " git add (chunk)
+nmap gu <Plug>GitGutterUndoHunk   " git undo (chunk)
 
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
