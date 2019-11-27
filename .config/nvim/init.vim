@@ -1,4 +1,6 @@
 so ~/.vim/plugins.vim
+" below line is to make the fold method to indentation
+set foldmethod=indent
 set number
 set rnu
 
@@ -9,7 +11,7 @@ let g:gitgutter_sign_removed = '-'
 let g:gitgutter_sign_removed_first_line = '^'
 let g:gitgutter_sign_modified_removed = '<'
 let g:gitgutter_override_sign_column_highlight = 1
-set updatetime=250
+set updatetime=1000
 nmap gn <Plug>GitGutterNextHunk  " git next 
 nmap gp <Plug>GitGutterPrevHunk  " git previous
 nmap ga <Plug>GitGutterStageHunk  " git add (chunk)
